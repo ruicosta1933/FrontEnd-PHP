@@ -31,7 +31,7 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-    <?php require("../admin/bd.php"); ?>
+    <?php require("admin/bd.php"); ?>
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">

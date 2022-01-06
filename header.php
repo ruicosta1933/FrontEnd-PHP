@@ -46,7 +46,7 @@
   position: absolute;
   right: 0;
   background-color: #f9f9f9;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -75,15 +75,21 @@
                         <?php if(isset($_SESSION["id"])){?>
                             <a href="#"><?php echo $_SESSION["username"];?></a>
                                 <div class="dropdown-content" style="right:0;">
-                                    <a href="#">Meu Perfil</a>
+                                    <a href="?page=4">Meu Perfil</a>
                                     <a href="?page=3">Meus Produtos</a>
                                     <a href="?page=2">Adicionar Produtos</a>
                                 </div>
-                            <a href="../admin/logout.php">Logout</a>
-                            <?php } else {?>
+                            <a href="admin/logout.php">Logout</a>
+                            <?php
+                            if($_SESSION["tipo"] == "Admin"){?>
+                                <a href="admin/index.php">Dashboard</a>
+                                <?php
+                            }
+                        
+                        } else {?>
 
-                            <a href="../admin/login.php">Login</a>
-                            <a href="../admin/login.php">Register</a>
+                            <a href="admin/login.php">Login</a>
+                            <a href="admin/login.php">Register</a>
 
                             <?php } ?>
                         </div>

@@ -1,7 +1,7 @@
 <?php
 
     
- require("../admin/bd.php");
+ require("admin/bd.php");
 if(isset($_POST["submit"])){
     $name = $_POST["name"];
     $quantity = $_POST["quantity"];
