@@ -78,13 +78,17 @@
                                     <a href="?page=4">Meu Perfil</a>
                                     <a href="?page=3">Meus Produtos</a>
                                     <a href="?page=2">Adicionar Produtos</a>
+                                    <?php
+                                    if($_SESSION["tipo"] == "Admin"){?>
+                                        <a href="admin/index.php">Dashboard</a>
+                                        <?php } ?>
+                                    <a href="admin/logout.php">Logout</a>
+                                    
                                 </div>
-                            <a href="admin/logout.php">Logout</a>
-                            <?php
-                            if($_SESSION["tipo"] == "Admin"){?>
-                                <a href="admin/index.php">Dashboard</a>
+                            
+                           
                                 <?php
-                            }
+                            
                         
                         } else {?>
 
