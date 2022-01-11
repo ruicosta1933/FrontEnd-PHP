@@ -11,7 +11,6 @@ if(isset($_POST["submit"])){
     $userid = $_POST["userid"];
     $ref = md5(time());
 
-    echo $country;exit;
     if (count($_FILES) > 0) {
             
 
