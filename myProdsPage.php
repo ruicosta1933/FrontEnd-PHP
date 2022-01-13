@@ -57,9 +57,8 @@ if(isset($_GET["prodid"])){
                            
                            
                            <?php
-                    }
+                    }else {
                                 while($row = $sql_frase->fetch_assoc()){
-
 
 
                                     $sql_image=$mysqli->query("SELECT * FROM image WHERE prodRef='" . $row["ref"] . "'") or die ("Erro ao selecionar o home.");
@@ -73,7 +72,7 @@ if(isset($_GET["prodid"])){
                                                
                                                     <ul class="product__hover">
                                                         <li><a href="<?php echo 'data:'.$image['imageType'].';base64,'.base64_encode($image['imageData']).''; ?>" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                                        <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
+                                                        <li><a href="?page=4&prodid=<?php echo $row["id"]; ?>""><span class="icon_adjust-horiz"></span></a></li>
                                                         <li><a href="?page=3&prodid=<?php echo $row["ref"]; ?>"><button  data-toggle="tooltip" data-placement="top" title="Delete" style="background-color: transparent; border-color: transparent;" onclick="return confirm('Are you sure you want to Delete?');"><span class="icon_trash_alt"></span></button></a></li>
                                                     </ul>
                                                 </div>
@@ -82,10 +81,6 @@ if(isset($_GET["prodid"])){
                                                     <div class="product__price"><?php echo $row["preco"];?> €</div>
                                                 </div>
                                             </div>
-                                        </div>
-                        <?php 
-                    } }?>
-                    </div>
-                </div>
+                                        </div><?php }}}?>
             </div>
         </div>

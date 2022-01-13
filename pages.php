@@ -13,6 +13,9 @@ if(!isset($_GET['page'])){
         case 3:
         require "myProdsPage.php";
     break;
+    case 4:
+        require "editProdsPage.php";
+    break;
 
         default:
         include "main.php";
