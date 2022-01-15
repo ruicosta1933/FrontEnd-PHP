@@ -3,17 +3,21 @@
     
  require("admin/bd.php");
 if(isset($_POST["submit"])){
-    $name = $_POST["name"];
-    $quantity = $_POST["quantity"];
-    $country = $_POST["country"];
-    $price = $_POST["price"];
-    $nota = $_POST["note"];
+    $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
+    $quantity = filter_var($_POST["quantity"], FILTER_SANITIZE_STRING);
+    $country = filter_var($_POST["country"], FILTER_SANITIZE_STRING);
+    $price = filter_var($_POST["price"], FILTER_SANITIZE_STRING);
+    $nota = filter_var($_POST["note"], FILTER_SANITIZE_STRING);
     $userid = $_POST["userid"];
     $ref = md5(time());
 
     if (count($_FILES) > 0) {
             
+        $filepath = $_FILES['file']['tmp_name'];
+        $fileSize = filesize($filepath);
 
+        if ($fileSize === 0) {
+            if ($fileSize > 3145728) {
             $countfiles = count($_FILES['file']['name']);
             
             for($i=0;$i<$countfiles;$i++){
@@ -26,6 +30,14 @@ if(isset($_POST["submit"])){
 
                 $sql = "INSERT INTO image (imageType, imageData, prodRef) VALUES ('".$imageProperties['mime']."', '".$imageData."', '".$ref."')";
                 $mysqli->query($sql);
+            }
+        }
+        else {
+            echo "<meta http-equiv=refresh content='0; url=register.php?page=2&message=10'>";exit;
+        }
+        }
+        else {
+            echo "<meta http-equiv=refresh content='0; url=register.php?page=2&message=10'>";exit;
         }
 
     }
@@ -347,7 +359,7 @@ if(isset($_POST["submit"])){
                             <div class="col-lg-12">
                             <div class="checkout__form__input">
                                     <p>Image <span>*</span></p>
-                                    <input type="file" name="file[]" multiple required>
+                                    <input type="file" name="file[]" accept="image/png, image/jpeg" multiple required>
                                 </div>
                             </div>
                             <div class="col-lg-12">

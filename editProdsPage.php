@@ -3,11 +3,12 @@
     
  require("admin/bd.php");
 if(isset($_POST["submit"])){
-    $name = $_POST["name"];
-    $quantity = $_POST["quantity"];
-    $country = $_POST["country"];
-    $price = $_POST["price"];
-    $nota = $_POST["note"];
+    $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
+    $quantity = filter_var($_POST["quantity"], FILTER_SANITIZE_INT);
+    $country = filter_var($_POST["country"], FILTER_SANITIZE_STRING);
+    $price = filter_var($_POST["price"], FILTER_SANITIZE_INT);
+    $nota =filter_var($_POST["note"], FILTER_SANITIZE_STRING);
+
     $id = $_POST["userid"];
     $refe = $_POST["ref"];
     $ref = md5(time());
@@ -15,11 +16,17 @@ if(isset($_POST["submit"])){
     if (count($_FILES) > 0) {
             
         $sql = "DELETE FROM image WHERE prodRef='" . $refe . "'";
-      
+          
+        $filepath = $_FILES['file']['tmp_name'];
+        $fileSize = filesize($filepath);
+
+        if ($fileSize === 0) {
+            if ($fileSize > 3145728) {
             $countfiles = count($_FILES['file']['name']);
 
             if ($mysqli->query($sql) === TRUE) {
                 
+
                 for($i=0;$i<$countfiles;$i++){
                    
                     $imageData = addslashes(file_get_contents($_FILES['file']['tmp_name'][$i]));
@@ -29,7 +36,14 @@ if(isset($_POST["submit"])){
                     
                     }
                }
-
+            }
+            else {
+                echo "<meta http-equiv=refresh content='0; url=register.php?page=3&message=10'>";exit;
+            }
+        }
+        else {
+            echo "<meta http-equiv=refresh content='0; url=register.php?page=3&message=10'>";exit;
+        }
     }
     else {
         echo "<meta http-equiv=refresh content='0; url=register.php?page=3&message=10'>";exit;
@@ -353,7 +367,7 @@ if(isset($_POST["submit"])){
                             <div class="col-lg-12">
                             <div class="checkout__form__input">
                                     <p>Image <span>*</span></p>
-                                    <input type="file" name="file[]" multiple>
+                                    <input type="file" name="file[]" accept="image/png, image/jpeg"  multiple>
 <?php
                                     $sql_image=$mysqli->query("SELECT * FROM image WHERE prodRef='" . $row["ref"] . "'") or die ("Erro ao selecionar o home.");
                                     $count = mysqli_num_rows($sql_image);
