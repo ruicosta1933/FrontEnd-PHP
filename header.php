@@ -64,7 +64,6 @@
                         <?php if(isset($_SESSION["id"])){?>
                             <a href="#"><?php echo $_SESSION["username"];?></a>
                                 <div class="dropdown-content" style="right:0;">
-                                    <a href="?page=4">Meu Perfil</a>
                                     <a href="?page=3">Meus Produtos</a>
                                     <a href="?page=2">Adicionar Produtos</a>
                                     <?php

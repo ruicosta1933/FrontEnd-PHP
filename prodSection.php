@@ -8,12 +8,12 @@
             </div>
         </div>
         <div class="row property__gallery"><?php
-         $sql_frase=$mysqli->query("SELECT * FROM produtos") or die ("Erro ao selecionar o home.");
-         if (mysqli_num_rows($sql_frase) > 1) {
+         $sql_frase=$mysqli->query("SELECT * FROM produtos where visivel=1") or die ("Erro ao selecionar o home.");
+         if (mysqli_num_rows($sql_frase) > 0) {
         while($row = $sql_frase->fetch_assoc()){
 
 
-$sql_image=$mysqli->query("SELECT * FROM image WHERE prodRef='" . $row["ref"] . "'") or die ("Erro ao selecionar o home.");
+$sql_image=$mysqli->query("SELECT * FROM image WHERE prodRef='" . $row["ref"] . "' ") or die ("Erro ao selecionar o home.");
 if($image = $sql_image->fetch_assoc()){
 
 ?>
@@ -25,7 +25,9 @@ if($image = $sql_image->fetch_assoc()){
                 <ul class="product__hover">
                     <li><a href="<?php echo 'data:'.$image['imageType'].';base64,'.base64_encode($image['imageData']).''; ?>" class="image-popup"><span class="arrow_expand"></span></a></li>
                     <li><a ><span class="icon_heart_alt"></span></a></li>
-                    <li><a ><span class="icon_bag_alt"></span></a></li>
+                    <?php if(isset($_SESSION) && isset($_SESSION["id"])){ ?>
+                    <li><a href="?page=5&prodid=<?php echo $row["ref"]; ?>"><span class="icon_adjust-horiz"></span></a></li>
+                    <?php } ?>
                 </ul>
             </div>
             <div class="product__item__text">

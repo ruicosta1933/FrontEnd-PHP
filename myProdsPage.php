@@ -1,8 +1,7 @@
 <?php 
 
-if(isset($_GET["prodid"])){
-
-    $sql = "DELETE FROM produtos WHERE ref='" . $_GET["prodid"] . "'";
+if(isset($_GET["prodid"])  && !isset($_GET["visible"])){
+  $sql = "DELETE FROM produtos WHERE ref='" . $_GET["prodid"] . "'";
 
      if ($mysqli->query($sql) === TRUE) {
         $sql = "DELETE FROM image WHERE prodRef='" . $_GET["prodid"] . "'";
@@ -15,6 +14,30 @@ if(isset($_GET["prodid"])){
         } else {
             echo "<meta http-equiv=refresh content='0; url=index.php?page=3&message=7'>";exit;	
         }
+
+}
+if(isset($_GET["prodid"]) && isset($_GET["visible"])){
+
+
+    if($_GET["visible"] == 1){
+        $sql = "UPDATE produtos SET visivel=1 WHERE ref='".$_GET["prodid"]."'";
+
+        if ($mysqli->query($sql) === TRUE) {
+
+            echo "<meta http-equiv=refresh content='0; url=index.php?page=3&message=16'>";exit;	
+            } else {
+                echo "<meta http-equiv=refresh content='0; url=index.php?page=3&message=7'>";exit;	
+            }
+    }
+        else if($_GET["visible"] == 0){
+            $sql = "UPDATE produtos SET visivel=0 WHERE ref='".$_GET["prodid"]."'";
+
+            if ($mysqli->query($sql) === TRUE) {
+                echo "<meta http-equiv=refresh content='0; url=index.php?page=3&message=15'>";exit;	
+                } else {
+                    echo "<meta http-equiv=refresh content='0; url=index.php?page=3&message=7'>";exit;	
+                }
+                }
 
 }
 
@@ -72,8 +95,15 @@ if(isset($_GET["prodid"])){
                                                
                                                     <ul class="product__hover">
                                                         <li><a href="<?php echo 'data:'.$image['imageType'].';base64,'.base64_encode($image['imageData']).''; ?>" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                                        <li><a href="?page=4&prodid=<?php echo $row["id"]; ?>""><span class="icon_adjust-horiz"></span></a></li>
-                                                        <li><a href="?page=3&prodid=<?php echo $row["ref"]; ?>"><button  data-toggle="tooltip" data-placement="top" title="Delete" style="background-color: transparent; border-color: transparent;" onclick="return confirm('Are you sure you want to Delete?');"><span class="icon_trash_alt"></span></button></a></li>
+                                                        <li><a href="?page=4&prodid=<?php echo $row["id"]; ?>"><span class="icon_adjust-horiz"></span></a></li>
+
+                                                        <?php if($row["visivel"] == 1){?>
+                                                        <li><a href="?page=3&prodid=<?php echo $row["ref"]; ?>&visible=0"><span class="icon_minus_alt2"></span></a></li>
+                                                        <?php }  else if($row["visivel"] == 0){?>
+                                                        <li><a href="?page=3&prodid=<?php echo $row["ref"]; ?>&visible=1"><span class="icon_check_alt2"></span></a></li>
+                                                        <?php } ?>
+
+                                                        <li><a href="?page=3&prodid=<?php echo $row["ref"]; ?>"><button  data-toggle="tooltip" data-placement="top" title="Delete" style="background-color: transparent; border-color: transparent;" onclick="return confirm('Are you sure you want to Delete?');"><span class="icon_trash_alt"></span></button></a></li>                                    
                                                     </ul>
                                                 </div>
                                                 <div class="product__item__text">

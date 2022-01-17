@@ -5,7 +5,6 @@
   <!-- Categories Section Begin -->
   <!--  <?php require("category.php");?>-->
 <!-- Categories Section End -->
-
 <!-- Product Section Begin -->
 <?php require("prodSection.php");?>
 <!-- Product Section End -->
