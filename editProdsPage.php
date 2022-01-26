@@ -7,8 +7,8 @@ if(isset($_POST["submit"])){
     $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
     $quantity = filter_var($_POST["quantity"], FILTER_SANITIZE_NUMBER_INT);
     $country = filter_var($_POST["country"], FILTER_SANITIZE_STRING);
-    $price = filter_var($_POST["price"], FILTER_SANITIZE_NUMBER_INT);
-    $nota =filter_var($_POST["note"], FILTER_SANITIZE_STRING);
+    $price = filter_var($_POST["price"], FILTER_SANITIZE_NUMBER_FLOAT);
+    $nota = filter_var($_POST["note"], FILTER_SANITIZE_STRING);
 
     $id = $_POST["userid"];
     $refe = $_POST["ref"];

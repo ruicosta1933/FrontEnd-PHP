@@ -83,7 +83,13 @@ if(isset($_POST["submit"])){
             <form action="addProdPage.php" enctype="multipart/form-data" method="post" class="checkout__form">
                 <div class="row">
                     <div class="col-lg-12">
+                    <?php 
+                            if(isset($_GET["message"]) && $_GET["message"]==6){
+                                echo " <center><h5 style='color: green'>Adicionado com Sucesso</h5></center>";
+                            }
+                        ?>
                         <h5>Product Detail</h5>
+                       
                         <div class="row">
                         <input type="hidden" name="userid" value="<?php echo $_SESSION["id"];?>">
                             <div class="col-lg-6 col-md-6 col-sm-6">
