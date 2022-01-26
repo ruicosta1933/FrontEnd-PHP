@@ -12,12 +12,10 @@ if(isset($_POST["submit"])){
     $ref = md5(time());
 
     if (count($_FILES) > 0) {
-            
         $filepath = $_FILES['file']['tmp_name'];
-        $fileSize = filesize($filepath);
+        $fileSize =  $_FILES['file']['size'];
 
-        if ($fileSize === 0) {
-            if ($fileSize > 3145728) {
+        if ($fileSize > 0) {
             $countfiles = count($_FILES['file']['name']);
             
             for($i=0;$i<$countfiles;$i++){
@@ -33,27 +31,30 @@ if(isset($_POST["submit"])){
             }
         }
         else {
-            echo "<meta http-equiv=refresh content='0; url=register.php?page=2&message=10'>";exit;
+            echo "<meta http-equiv=refresh content='0; url=index.php?page=2&message=11'>";exit;
         }
-        }
-        else {
-            echo "<meta http-equiv=refresh content='0; url=register.php?page=2&message=10'>";exit;
-        }
-
     }
     else {
-        echo "<meta http-equiv=refresh content='0; url=register.php?page=2&message=10'>";exit;
+        echo "<meta http-equiv=refresh content='0; url=index.php?page=2&message=12'>";exit;
     }
 
 
-    $sql = "INSERT INTO produtos (nome, ref, preco, quantidade, pais, nota, userid) VALUES ('".$name."', '".$ref."', '".$price."', '".$quantity."', '".$country."','".$nota."', '".$userid."')";
+    if($stmt = $mysqli->prepare("INSERT INTO produtos (nome, ref, preco, quantidade, pais, nota, userid) VALUES (?,?,?,?,?,?,?)")){
+        $stmt->bind_param("ssdissi", $name, $ref, $price, $quantity,$country, $nota, $userid);
+        $stmt->execute();
+        $stmt->close();
+        echo "<meta http-equiv=refresh content='0; url=index.php?page=2&message=6'>";exit;	
+    }
+
+
+   /* $sql = "INSERT INTO produtos (nome, ref, preco, quantidade, pais, nota, userid) VALUES ('".$name."', '".$ref."', '".$price."', '".$quantity."', '".$country."','".$nota."', '".$userid."')";
             
             if ($mysqli->query($sql) === TRUE) {
                 echo "<meta http-equiv=refresh content='0; url=index.php?page=2&message=6'>";exit;	
             } else {
                 echo "Error: " . $sql . "<br>" . $mysqli->error;exit;
             }
-            
+            */
             $mysqli->close();
 
 }
